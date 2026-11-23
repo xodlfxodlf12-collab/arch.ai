@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부동산지적학과 바이브 코딩 실습 로드맵 & 가이드</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@500;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b0d11;
+            --surface: #131720;
+            --surface-card: #1a202c;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-accent: rgba(56, 189, 248, 0.3);
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.15);
+            --blue: #38bdf8;
+            --purple: #a855f7;
+            --text-main: #f3f4f6;
+            --text-sub: #9ca3af;
+            --text-muted: #6b7280;
+            --radius-lg: 16px;
+            --radius-md: 10px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            padding-bottom: 5rem;
+        }
+
+        /* Top Hero */
+        .header {
+            background: linear-gradient(180deg, rgba(20, 24, 33, 0.9) 0%, rgba(11, 13, 17, 0.4) 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 3.5rem 2rem 2.5rem 2rem;
+            text-align: center;
+        }
+        .tag {
+            display: inline-block;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: var(--accent);
+            background: var(--accent-glow);
+            padding: 4px 14px;
+            border-radius: 20px;
+            border: 1px solid var(--border-accent);
+            margin-bottom: 1rem;
+        }
+        .title {
+            font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+        .title span {
+            background: linear-gradient(90deg, var(--accent), #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .desc {
+            max-width: 680px;
+            margin: 0 auto;
+            color: var(--text-sub);
+            font-size: 1.05rem;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1080px;
+            margin: 2.5rem auto 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Nav Pills */
+        .phase-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-sub);
+            padding: 0.75rem 1.6rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(56, 189, 248, 0.08);
+        }
+
+        /* Step Card */
+        .step-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            margin-bottom: 2.5rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .step-card:hover {
+            border-color: var(--border-accent);
+        }
+        .step-header {
+            padding: 1.5rem 2rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .step-badge {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .step-badge .num {
+            background: var(--accent);
+            color: #0b0d11;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+        .step-time {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            background: rgba(0,0,0,0.3);
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+        .step-body {
+            padding: 2rem;
+        }
+        .step-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .step-intro {
+            color: var(--text-sub);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        /* Teaching Points Grid */
+        .point-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        .point-box {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            padding: 1.2rem;
+            border-radius: var(--radius-md);
+        }
+        .point-box h4 {
+            color: var(--accent);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .point-box p {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            line-height: 1.5;
+        }
+
+        /* Prompt Template Box (AI 바이브코딩 프롬프트) */
+        .prompt-template {
+            background: #090b0e;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: var(--radius-md);
+            padding: 1.2rem;
+            margin-top: 1.2rem;
+        }
+        .prompt-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.6rem;
+        }
+        .prompt-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #10b981;
+            letter-spacing: 1px;
+        }
+        .btn-copy {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 3px 10px;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-copy:hover {
+            background: var(--accent);
+            color: #000;
+        }
+        .prompt-code {
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #e2e8f0;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        /* Checklist */
+        .checklist {
+            margin-top: 1.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px dashed var(--border);
+        }
+        .checklist h5 {
+            font-size: 0.9rem;
+            color: var(--text-main);
+            margin-bottom: 0.6rem;
+        }
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-bottom: 0.4rem;
+        }
+        .check-item input[type="checkbox"] {
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
+
+        /* Floating action bottom */
+        .launch-bar {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-accent);
+        }
+        .btn-live {
+            display: inline-block;
+            background: var(--accent);
+            color: #0b0d11;
+            font-weight: 700;
+            padding: 0.9rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1rem;
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
+            transition: transform 0.2s;
+        }
+        .btn-live:hover {
+            transform: scale(1.04);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <span class="tag">REAL ESTATE & CADASTRAL VIBE-CODING CURRICULUM</span>
+        <h1 class="title">부동산지적학과 학생을 위한 <span>바이브 코딩 4단계 로드맵</span></h1>
+        <p class="desc">
+            복잡한 코딩 문법 대신, AI와 대화하며 나만의 인터랙티브 부동산·지적 포트폴리오를 기획·제작·배포하는 실습 커리큘럼입니다.
+        </p>
+    </header>
+
+    <div class="container">
+        <!-- Week 11: 바이브코딩 3 -->
+        <div class="step-card" id="week11">
+            <div class="step-header">
+                <div class="step-badge">
+                    <span class="num">1</span>
+                    <span>11주차: 프론트엔드 제작 & AI 도슨트 연결</span>
+                </div>
+                <span class="step-time">수업 시간: 2~3시간 소요</span>
+            </div>
+            <div class="step-body">
+                <h3 class="step-title">🗺️ 나만의 부동산·지적 포트폴리오 웹사이트 기초 구축</h3>
+                <p class="step-intro">
+                    학생이 지난 학기에 작업했던 지적측량 성과도, GIS 입지분석 리포트, 개발 타당성(DCF) 보고서를 웹페이지에 담고, 방문자에게 분석 의도를 말해주는 <strong>AI 도슨트(Gemini API)</strong>를 장착합니다.
+                </p>
+
+                <div class="point-grid">
+                    <div class="point-box">
+                        <h4>🎯 학생 전달 핵심 내용</h4>
+                        <p>• 웹사이트의 3대 뼈대(HTML 구조, CSS 스타일, JS 동작)의 역할을 감각적으로 이해하기<br>• PDF 보고서와 달리 반응형(PC/모바일)으로 작동하는 인터랙티브 웹 포트폴리오의 장점</p>
+                    </div>
+                    <div class="point-box">
+                        <h4>💬 AI와 협업하는 방법 (바이브 코딩)</h4>
+                        <p>• "코드 다 짜줘" 대신 <strong>"내 입체지적·GIS 분석 컨셉에 어울리는 차분한 다크 블루 테마로 만들어줘"</strong>처럼 전공 어휘로 AI에게 지시하기</p>
+                    </div>
+                    <div class="point-box">
+                        <h4>🤖 무료 AI API 연동 실습</h4>
+                        <p>• Google AI Studio에서 무료 Gemini API Key 발급받기<br>• 방문자가 질문하면 내 GIS·가치평가 프로젝트를 대변해 답해주는 도슨트 챗봇 연결</p>
+                    </div>
+                </div>
+
+                <!-- 💡 챗봇 오픈소스 3대 유형 비교표 -->
+                <div style="margin-top: 1.8rem; background: rgba(0,0,0,0.3); border: 1px solid var(--border-accent); border-radius: var(--radius-md); padding: 1.2rem;">
+                    <h4 style="color: var(--accent); font-size: 1rem; margin-bottom: 0.8rem;">💡 개인 포트폴리오 챗봇 오픈소스 유형 비교 및 수업 적합도</h4>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem; text-align: left;">
+                            <thead>
+                                <tr style="border-bottom: 1px solid var(--border); color: var(--text-sub);">
+                                    <th style="padding: 8px;">구분</th>
+                                    <th style="padding: 8px; color: var(--accent);">1. 프론트엔드 UI 위젯 (강력 추천)</th>
+                                    <th style="padding: 8px;">2. 임베드형 노코드 챗봇</th>
+                                    <th style="padding: 8px; color: #ef4444;">3. 풀스택/자체 호스팅 (비추천)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 8px; font-weight: 600;">대표 예시</td>
+                                    <td style="padding: 8px; color: var(--text-main);">Botpress Webchat, 경량 오픈소스 JS 위젯</td>
+                                    <td style="padding: 8px;">Typebot, Chatbase, Dify 공유 링크</td>
+                                    <td style="padding: 8px;">LibreChat, Ollama 로컬 연결</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 8px; font-weight: 600;">작동 방식</td>
+                                    <td style="padding: 8px;">코드 2~3줄로 우측 하단 플로팅 버블과 대화창 삽입</td>
+                                    <td style="padding: 8px;">플랫폼에서 챗봇 만들고 iframe 복사 붙여넣기</td>
+                                    <td style="padding: 8px;">Docker나 백엔드 서버를 띄워 모델 연결</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 8px; font-weight: 600;">장점</td>
+                                    <td style="padding: 8px; color: #10b981;">수려한 UI, 웹(HTML/JS) 코드와 직접 결합, 높은 성취감</td>
+                                    <td style="padding: 8px;">에러 발생 0%, 10분 만에 완성</td>
+                                    <td style="padding: 8px;">완벽한 커스터마이징 가능</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px; font-weight: 600;">주의점</td>
+                                    <td style="padding: 8px;">메시지 전송 시 백엔드(또는 Gemini API) 연결 필요</td>
+                                    <td style="padding: 8px;">코딩 수업이라기보다 서비스 툴 세팅 느낌</td>
+                                    <td style="padding: 8px; color: #f87171;">2시간 수업 내 구현 절대 불가 (포트/도커 설정)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 실습 3단계 흐름 -->
+                    <div style="margin-top: 1.2rem; padding-top: 1rem; border-top: 1px dashed var(--border);">
+                        <h5 style="color: #10b981; font-size: 0.9rem; margin-bottom: 0.5rem;">⏱️ 40분 완성 실습 흐름 (오픈소스 위젯 + AI 연결)</h5>
+                        <ul style="font-size: 0.82rem; color: var(--text-sub); line-height: 1.7; padding-left: 1.2rem;">
+                            <li><strong>1단계 (10분): 위젯 삽입</strong> - 우측 하단 플로팅 버블(FAB) 및 대화창 HTML/CSS 템플릿 장착</li>
+                            <li><strong>2단계 (15분): 페르소나 부여</strong> - "너는 부동산지적학과 박서준의 AI 포트폴리오 도슨트야..." 프롬프트 설정</li>
+                            <li><strong>3단계 (15분): 연동 및 테스트 (Dual-Track)</strong>:
+                                <br>• <strong>옵션 B (API 없이 안전하게)</strong>: 추천 질문 4개에 자동 답하는 시나리오 룰베이스 (네트워크 에러/키 노출 0%)
+                                <br>• <strong>옵션 A (실제 AI 대화)</strong>: 무료 Gemini API 키를 연결하여 자유 질의응답 활성화
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Copiable Prompt Template -->
+                <div class="prompt-template">
+                    <div class="prompt-header">
+                        <span class="prompt-label">📌 학생들에게 제공할 AI 지시문 템플릿</span>
+                        <button class="btn-copy" onclick="copyPrompt('prompt-1')">복사하기</button>
+                    </div>
+                    <pre class="prompt-code" id="prompt-1">"나는 부동산지적학과 4학년 박서준이야. 지난 학기에 성수동에서 진행한 'QGIS 지적재조사 및 경계 불부합 정밀 보정' 프로젝트가 있어.
+- 대상 지역: 서울시 성동구 성수동 일대 (48필지, 18,450㎡)
+- 주요 기법: UAV 드론 정사영상, GNSS RTK 측량, QGIS(EPSG:5186) 연속지적도 중첩 및 경계 오차 보정
+이 내용을 바탕으로 웹사이트에서 카드 클릭 시 열리는 상세 분석 모달 데이터를 수정해줘.
+그리고 방문자가 QGIS 지적재조사에 대해 물어보면 설명해 주는 AI 챗봇 답변도 추가해줘."</pre>
+                </div>
+
+                <div class="checklist">
+                    <h5>✅ 11주차 달성 체크리스트</h5>
+                    <div class="check-item"><input type="checkbox"> 내 GIS 분석 지도·사업성 차트 이미지 2장 이상 갤러리에 교체하기</div>
+                    <div class="check-item"><input type="checkbox"> 프로젝트 카드 클릭 시 상세 리포트 모달 창 정상 동작 확인</div>
+                    <div class="check-item"><input type="checkbox"> AI 챗봇에 "QGIS 지적재조사란?" 질문 후 답변 받아보기</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 12: 바이브코딩 4 -->
+        <div class="step-card" id="week12">
+            <div class="step-header">
+                <div class="step-badge">
+                    <span class="num">2</span>
+                    <span>12주차: 무료 웹 호스팅 & 모바일 링크 완성</span>
+                </div>
+                <span class="step-time">수업 시간: 1.5~2시간 소요</span>
+            </div>
+            <div class="step-body">
+                <h3 class="step-title">🌐 내 포트폴리오를 전 세계에 무료 배포하기 (Vercel / GitHub)</h3>
+                <p class="step-intro">
+                    내 컴퓨터(Localhost)에서만 보이던 웹사이트를 클릭 몇 번으로 실제 인터넷 주소(URL)로 배포하여 스마트폰으로 접속해봅니다.
+                </p>
+
+                <div class="point-grid">
+                    <div class="point-box">
+                        <h4>🎯 학생 전달 핵심 내용</h4>
+                        <p>• 로컬 실행(내 컴퓨터)과 웹 배포(서버 호스팅)의 차이점 이해<br>• Vercel / GitHub Pages를 이용한 완전 무료 영구 호스팅</p>
+                    </div>
+                    <div class="point-box">
+                        <h4>📱 모바일 반응형(Responsive) 점검</h4>
+                        <p>• 크롬 개발자 도구(F12) 모바일 보기 모드로 스마트폰 화면에서 레이아웃이 깨지지 않는지 AI에게 수정 요청하기</p>
+                    </div>
+                    <div class="point-box">
+                        <h4>🔒 보안 및 환경변수 주의점</h4>
+                        <p>• 무료 API 키가 깃허브 공개 저장소에 그대로 노출되지 않도록 하는 기본 보안 수칙 교육</p>
+                    </div>
+                </div>
+
+                <!-- Copiable Prompt Template -->
+                <div class="prompt-template">
+                    <div class="prompt-header">
+                        <span class="prompt-label">📌 학생들에게 제공할 AI 지시문 템플릿</span>
+                        <button class="btn-copy" onclick="copyPrompt('prompt-2')">복사하기</button>
+                    </div>
+                    <pre class="prompt-code" id="prompt-2">"스마트폰 화면에서 확인해보니까 QGIS 공간분석 뷰어와 프로젝트 카드가 좌우로 삐져나와.
+아이폰이나 갤럭시 세로 모드(화면 너비 400px 이하)에서도 깔끔하게 1열로 정렬되도록 style.css의 미디어 쿼리를 보완해줘."</pre>
+                </div>
+
+                <div class="checklist">
+                    <h5>✅ 12주차 달성 체크리스트</h5>
+                    <div class="check-item"><input type="checkbox"> GitHub 리포지토리 생성 후 파일 푸시 완료</div>
+                    <div class="check-item"><input type="checkbox"> Vercel 무료 배포로 개인 전용 URL (예: seojun-geo.vercel.app) 획득</div>
+                    <div class="check-item"><input type="checkbox"> 스마트폰으로 내 링크 접속해 모바일 최적화 확인</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 13: 바이브코딩 5 -->
+        <div class="step-card" id="week13">
+            <div class="step-header">
+                <div class="step-badge">
+                    <span class="num">3</span>
+                    <span>13주차: QGIS 공간분석 & 주제도(Thematic Map) → 웹 뷰어 탑재</span>
+                </div>
+                <span class="step-time">수업 시간: 2~3시간 소요</span>
+            </div>
+            <div class="step-body">
+                <h3 class="step-title">🧊 QGIS 공간분석 결과물(지적·입지 주제도)을 웹 포트폴리오에 탑재하기</h3>
+                <p class="step-intro">
+                    QGIS와 Python(GeoPandas)으로 수행한 연속지적도·100m 격자 히트맵·역세권 버퍼 분석 결과를 인쇄 조판(Print Layout) 이미지 및 인터랙티브 웹 레이어로 연동합니다.
+                </p>
+
+                <div class="point-grid">
+                    <div class="point-box">
+                        <h4>🎯 학생 전달 핵심 내용</h4>
+                        <p>• MCP 개념: AI에게 PyQGIS 또는 GeoPandas 전처리 코드를 요청해 대용량 연속지적도·실거래가 데이터를 자동 분석하는 워크플로우 경험</p>
+                    </div>
+                    <div class="point-box">
+                        <h4>📐 QGIS 주제도 & 레이어 시각화</h4>
+                        <p>• 연속지적도 필지 경계, 100m 격자 밀도 히트맵, 역세권 도보권 버퍼 심볼 스타일링<br>• 인쇄 조판(Print Layout) 고해상도 내보내기(`.png`/`.jpg`) 및 웹 최적화</p>
+                    </div>
+                    <div class="point-box">
+                        <h4>🕹️ QGIS 웹 뷰어 탑재</h4>
+                        <p>• 11주차 웹사이트의 QGIS 뷰어 영역에 내가 내보낸 주제도(`maps/qgis_map.png`)를 올려 레이어와 함께 시연하기</p>
+                    </div>
+                </div>
+
+                <!-- Copiable Prompt Template -->
+                <div class="prompt-template">
+                    <div class="prompt-header">
+                        <span class="prompt-label">📌 학생들에게 제공할 AI 지시문 템플릿</span>
+                        <button class="btn-copy" onclick="copyPrompt('prompt-3')">복사하기</button>
+                    </div>
+                    <pre class="prompt-code" id="prompt-3">"PyQGIS 또는 Python GeoPandas를 사용해서 성수동 연속지적도와 역세권 350m 버퍼를 중첩 분석하는 스크립트를 짜줘:`r`n1. 좌표계는 EPSG:5186(Korea 2000 중부원점)으로 통일`r`n2. 역세권 반경 350m 이내 국공유지 유휴 필지만 필터링`r`n3. QGIS 인쇄 조판에서 다크 테마 주제도(.png)로 내보낼 수 있도록 심볼 스타일 추천도 해줘."</pre>
+                </div>
+
+                <div class="checklist">
+                    <h5>✅ 13주차 달성 체크리스트</h5>
+                    <div class="check-item"><input type="checkbox"> QGIS에서 연속지적도·격자 히트맵·역세권 버퍼 중첩 분석 완료</div>
+                    <div class="check-item"><input type="checkbox"> QGIS 인쇄 조판에서 `.png` 지도 내보내기 후 `maps/qgis_map.png`로 저장</div>
+                    <div class="check-item"><input type="checkbox"> 웹 브라우저 QGIS 뷰어에서 내 지도 업로드 및 필지 속성 클릭 검토</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 14: 최종 발표 -->
+        <div class="step-card" id="week14">
+            <div class="step-header">
+                <div class="step-badge">
+                    <span class="num">4</span>
+                    <span>14주차: Presentation (인터랙티브 웹 포트폴리오 시연)</span>
+                </div>
+                <span class="step-time">수업 시간: 5~7분 개인 발표</span>
+            </div>
+            <div class="step-body">
+                <h3 class="step-title">🎤 "내 공간분석을 말하는 AI" 라이브 프레젠테이션</h3>
+                <p class="step-intro">
+                    무거운 PPT 대신 본인이 직접 배포한 웹사이트 링크를 빔프로젝터에 띄우고 라이브로 시연하는 혁신적인 발표 평가를 진행합니다.
+                </p>
+
+                <div class="point-grid">
+                    <div class="point-box">
+                        <h4>📢 권장 발표 순서 (5분 스피치)</h4>
+                        <p>1. 내 전공 비전 및 분석 철학 소개 (Hero 섹션)<br>2. 대표 지적·GIS·사업성 프로젝트 상세 리포트 설명<br>3. QGIS 공간분석 뷰어 레이어 토글 및 내 지도 시연<br>4. AI 도슨트에게 질문 던지고 답변 검증</p>
+                    </div>
+                    <div class="point-box">
+                        <h4>🏆 평가 지표 가이드</h4>
+                        <p>• 지적·GIS·부동산 분석 논리의 타당성 (30%)<br>• 바이브 코딩을 통한 웹 구현 및 모바일 반응도 (40%)<br>• AI 프롬프트 제어 및 QGIS 공간정보 분석 완성도 (30%)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Launch Web Link Box -->
+        <div class="launch-bar">
+            <h3 style="margin-bottom: 0.8rem; font-size: 1.3rem;">지금 바로 완성된 샘플 웹사이트를 열어보세요!</h3>
+            <p style="color: var(--text-sub); margin-bottom: 1.5rem; font-size: 0.95rem;">
+                학생들에게 보여줄 완성형 기준작(Reference)이 준비되어 있습니다.
+            </p>
+            <a href="index.html" class="btn-live" target="_blank">🗺️ 포트폴리오 웹사이트 데모 열기 ↗</a>
+        </div>
+    </div>
+
+    <script>
+        function copyPrompt(id) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('프롬프트 템플릿이 클립보드에 복사되었습니다! AI 채팅창에 붙여넣어 사용하세요.');
+            });
+        }
+    </script>
+</body>
+</html>

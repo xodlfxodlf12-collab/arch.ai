@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>대학생 캠퍼스 생존 MBTI 성향 테스트</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-sub: #64748b;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Pretendard', -apple-system, sans-serif;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .app-card {
+      background: var(--card-bg);
+      width: 100%;
+      max-width: 440px;
+      border-radius: 28px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      overflow: hidden;
+      padding: 35px 25px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    /* Intro */
+    .intro-section {
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      background: #e0e7ff;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 13px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 15px;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.35;
+      margin-bottom: 15px;
+    }
+    .intro-desc {
+      font-size: 14px;
+      color: var(--text-sub);
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+    .intro-img {
+      font-size: 70px;
+      margin-bottom: 25px;
+      animation: float 2s infinite ease-in-out;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .btn-main {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+    }
+    .btn-main:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+
+    /* Question Screen */
+    .quiz-section {
+      display: none;
+    }
+    .progress-bar-container {
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--primary);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    .q-number {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .q-title {
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.45;
+      margin-bottom: 30px;
+      min-height: 56px;
+    }
+    .options-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .btn-option {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      padding: 16px 18px;
+      border-radius: 16px;
+      text-align: left;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      line-height: 1.4;
+    }
+    .btn-option:hover {
+      border-color: var(--primary);
+      background: #f5f3ff;
+      transform: translateY(-2px);
+    }
+
+    /* Result Screen */
+    .result-section {
+      display: none;
+      text-align: center;
+    }
+    .result-emoji {
+      font-size: 72px;
+      margin-bottom: 10px;
+    }
+    .result-type-tag {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .result-title {
+      font-size: 24px;
+      font-weight: 800;
+      margin: 8px 0 16px;
+    }
+    .result-box {
+      background: #f8fafc;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 20px;
+      text-align: left;
+      font-size: 14px;
+      line-height: 1.65;
+      color: #334155;
+      border: 1px solid #e2e8f0;
+    }
+    .result-box li {
+      margin-left: 18px;
+      margin-bottom: 6px;
+    }
+    .chemistry-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .chem-card {
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 12px;
+    }
+    .chem-good {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+    }
+    .chem-bad {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+    }
+    .chem-title {
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .btn-retry {
+      background: #e2e8f0;
+      color: #334155;
+      border: none;
+      padding: 14px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-card">
+    <!-- 1. 시작 화면 -->
+    <div id="introScreen" class="intro-section">
+      <div class="badge">대학생 공감 100% 심리테스트</div>
+      <div class="intro-img">🎓</div>
+      <h1>나의 캠퍼스 생존<br>캐릭터 MBTI는?</h1>
+      <p class="intro-desc">
+        과제 폭탄과 개강 파티 속에서<br>
+        당신은 어떤 동물로 살아남고 있을까요?
+      </p>
+      <button class="btn-main" onclick="startQuiz()">테스트 시작하기 (30초)</button>
+    </div>
+
+    <!-- 2. 질문 화면 -->
+    <div id="quizScreen" class="quiz-section">
+      <div class="progress-bar-container">
+        <div id="progressBar" class="progress-bar-fill"></div>
+      </div>
+      <div id="qNumber" class="q-number">Q1 / 6</div>
+      <div id="qTitle" class="q-title">질문 내용</div>
+      <div class="options-container">
+        <button class="btn-option" onclick="chooseOption('A')" id="btnOptA">선택지 A</button>
+        <button class="btn-option" onclick="chooseOption('B')" id="btnOptB">선택지 B</button>
+      </div>
+    </div>
+
+    <!-- 3. 결과 화면 -->
+    <div id="resultScreen" class="result-section">
+      <div id="resEmoji" class="result-emoji">🐆</div>
+      <div id="resTypeTag" class="result-type-tag">ENTP 벼락치기형</div>
+      <h2 id="resTitle" class="result-title">치타 형</h2>
+      
+      <div class="result-box">
+        <ul id="resTraits">
+          <li>시험 2일 전부터 초인적인 집중력을 발휘합니다.</li>
+          <li>팀플에서 톡방 분위기를 띄우며 번뜩이는 아이디어를 던집니다.</li>
+        </ul>
+      </div>
+
+      <div class="chemistry-container">
+        <div class="chem-card chem-good">
+          <div class="chem-title">💚 찰떡 단짝</div>
+          <div id="resGoodMate">과탑 부엉이</div>
+        </div>
+        <div class="chem-card chem-bad">
+          <div class="chem-title">💔 극상성 주의</div>
+          <div id="resBadMate">멘탈 바사삭 미어캣</div>
+        </div>
+      </div>
+
+      <button class="btn-main" onclick="copyShareLink()">결과 링크 복사 & 자랑하기</button>
+      <button class="btn-retry" onclick="restartQuiz()">다시 테스트하기</button>
+    </div>
+  </div>
+
+  <script>
+    // 질문 데이터 (E vs I, S vs N, T vs F, J vs P)
+    const questions = [
+      {
+        q: "개강 첫 주말, 당신이 보내고 싶은 완벽한 하루는?",
+        a: "동기들과 뒤풀이 & 밤새 수다 떨며 친목 도모",
+        b: "방에서 배달음식 시켜놓고 침대 위 넷플릭스 정주행",
+        type: "EI"
+      },
+      {
+        q: "조별과제 팀장이 '각자 하고 싶은 파트 말해주세요'라고 했을 때?",
+        a: "답답하니까 그냥 내가 조장 맡아서 빠르게 정리한다",
+        b: "누군가 정해줄 때까지 조용히 단톡방 눈치만 본다",
+        type: "EI"
+      },
+      {
+        q: "기말고사 시험공부, 당신의 계획 스타일은?",
+        a: "시험 3주 전부터 하루 공부 분량을 분 단위로 플래너에 적어둠",
+        b: "D-2일부터 에너지 드링크 3캔 마시고 벼락치기로 승부",
+        type: "JP"
+      },
+      {
+        q: "친구가 '나 오늘 시험 완전 망쳤어 ㅠㅠ'라며 전화했을 때?",
+        a: "'무슨 과목인데? 몇 점 깎였어? 평균은 어때?' (원인 분석)",
+        b: "'헐 어떡해 ㅠㅠ 교수님이 문제 이상하게 낸 거 아님? 술 마시자' (공감 위로)",
+        type: "TF"
+      },
+      {
+        q: "공강 시간 2시간이 비었을 때 나는?",
+        a: "학교 근처 핫플 카페 가서 친구들과 인생샷 찍기",
+        b: "중앙도서관 소파 구석이나 수면실에서 낮잠 자기",
+        type: "EI"
+      },
+      {
+        q: "과제 마감 30분 전! 오류가 계속 뜰 때 나의 행동은?",
+        a: "냉정하게 AI 프롬프트 돌리며 어떻게든 돌아가게 수정해서 정각 제출",
+        b: "교수님 메일로 '교수님 살려주세요..' 읍소 메일 쓰고 있음",
+        type: "TF"
+      }
+    ];
+
+    // 결과 캐릭터 데이터 (8개 유형)
+    const results = {
+      "E_J": {
+        emoji: "🦁",
+        tag: "ESTJ / ENTJ",
+        title: "팀플 버스기사 사자",
+        traits: [
+          "조별과제 무임승차자를 절대 용서하지 않는 단호한 리더입니다.",
+          "시간 약속 안 지키는 사람을 보면 속에서 천불이 납니다.",
+          "취업 준비와 학점 관리가 이미 엑셀 파일로 정렬되어 있습니다."
+        ],
+        good: "과탑 플래너 부엉이",
+        bad: "멘탈 바사삭 미어캣"
+      },
+      "E_P": {
+        emoji: "🐆",
+        tag: "ESTP / ENTP",
+        title: "벼락치기 천재 치타",
+        traits: [
+          "시험 전날 밤샘으로 기적의 평점을 만들어내는 스릴 중독자입니다.",
+          "동아리, 술자리, 번개 모임 어디든 빠지지 않는 핵인싸입니다.",
+          "발표 당일 대본 없이 즉흥 멘트로 A학점을 쓸어 담습니다."
+        ],
+        good: "과탑 플래너 부엉이",
+        bad: "방구석 은둔 나무늘보"
+      },
+      "I_J": {
+        emoji: "🦉",
+        tag: "ISTJ / INTJ",
+        title: "과탑 플래너 부엉이",
+        traits: [
+          "도서관 지정석 지킴이이자 에브리타임 족보 마스터입니다.",
+          "말수는 적지만 과제 퀄리티 하나로 교수님을 감동시킵니다.",
+          "계획이 틀어지면 겉으론 침착하지만 속으론 멘붕이 옵니다."
+        ],
+        good: "팀플 버스기사 사자",
+        bad: "벼락치기 천재 치타"
+      },
+      "I_P": {
+        emoji: "🦥",
+        tag: "ISFP / INTP",
+        title: "방구석 힐러 나무늘보",
+        traits: [
+          "세상만사 귀찮지만 본인이 꽂힌 관심사에는 오타쿠급 몰입을 보입니다.",
+          "공강시간에 혼자 산책하거나 이어폰 끼고 있을 때 가장 행복합니다.",
+          "싸움을 싫어해서 웬만한 일엔 '그럴 수 있지~'하고 넘깁니다."
+        ],
+        good: "공감 요정 골든리트리버",
+        bad: "팀플 버스기사 사자"
+      }
+    };
+
+    let currentIdx = 0;
+    let scores = { E: 0, I: 0, T: 0, F: 0, J: 0, P: 0 };
+
+    function startQuiz() {
+      document.getElementById('introScreen').style.display = 'none';
+      document.getElementById('quizScreen').style.display = 'block';
+      currentIdx = 0;
+      scores = { E: 0, I: 0, T: 0, F: 0, J: 0, P: 0 };
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const q = questions[currentIdx];
+      document.getElementById('qNumber').innerText = `Q${currentIdx + 1} / ${questions.length}`;
+      document.getElementById('qTitle').innerText = q.q;
+      document.getElementById('btnOptA').innerText = q.a;
+      document.getElementById('btnOptB').innerText = q.b;
+
+      const progress = ((currentIdx) / questions.length) * 100;
+      document.getElementById('progressBar').style.width = `${progress}%`;
+    }
+
+    function chooseOption(opt) {
+      const q = questions[currentIdx];
+      if (q.type === "EI") {
+        if (opt === 'A') scores.E++; else scores.I++;
+      } else if (q.type === "JP") {
+        if (opt === 'A') scores.J++; else scores.P++;
+      } else if (q.type === "TF") {
+        if (opt === 'A') scores.T++; else scores.F++;
+      }
+
+      currentIdx++;
+      if (currentIdx < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById('quizScreen').style.display = 'none';
+      document.getElementById('resultScreen').style.display = 'block';
+
+      // 결과 매핑 키 계산 (E/I + J/P 조합)
+      const ei = scores.E >= scores.I ? "E" : "I";
+      const jp = scores.J >= scores.P ? "J" : "P";
+      const key = `${ei}_${jp}`;
+
+      const res = results[key] || results["E_P"];
+      document.getElementById('resEmoji').innerText = res.emoji;
+      document.getElementById('resTypeTag').innerText = res.tag;
+      document.getElementById('resTitle').innerText = res.title;
+
+      const ul = document.getElementById('resTraits');
+      ul.innerHTML = "";
+      res.traits.forEach(t => {
+        const li = document.createElement("li");
+        li.innerText = t;
+        ul.appendChild(li);
+      });
+
+      document.getElementById('resGoodMate').innerText = res.good;
+      document.getElementById('resBadMate').innerText = res.bad;
+    }
+
+    function restartQuiz() {
+      document.getElementById('resultScreen').style.display = 'none';
+      document.getElementById('introScreen').style.display = 'block';
+    }
+
+    function copyShareLink() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        alert("테스트 링크가 클립보드에 복사되었습니다! 친구들에게 공유해보세요 🎉");
+      }).catch(() => {
+        alert("링크 복사 완료!");
+      });
+    }
+  </script>
+</body>
+</html>

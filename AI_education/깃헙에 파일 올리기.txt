@@ -1,0 +1,86 @@
+수업용 교재나 유인물, 또는 학생들에게 단계별로 안내하기 좋도록 **GitHub 가입부터 첫 파일 업로드(`push`)까지의 전체 표준 절차**를 한눈에 보기 쉽게 정리했습니다.
+
+깃허브 주소 : https://github.com/xodlfxodlf12-collab/arch.ai.git
+
+---
+
+### GitHub 첫 시작 및 파일 업로드 단계별 가이드
+
+#### [1단계] GitHub 계정 설정 및 저장소(Repository) 생성
+
+웹사이트([github.com](https://github.com))에서 진행합니다.
+
+1. **회원가입 및 로그인** 후 우측 상단 **프로필 아이콘** → `Settings`로 이동합니다.
+2. **(권장) 개인 이메일 보호 설정**
+* 왼쪽 메뉴 **`Emails`** 선택 → **`Keep my email addresses private`** 체크
+* 화면에 안내된 가상 이메일(`숫자+아이디@users.noreply.github.com`)을 복사해 둡니다.
+
+
+3. **새 저장소(Repository) 만들기**
+* 우측 상단 **`+` 아이콘** → **`New repository`** 클릭
+* **Repository name:** 영문으로 저장소 이름 입력 (예: `my-project`)
+* **공개 여부:** `Public`(전체 공개) 또는 `Private`(비공개) 선택
+* 하단의 `README`, `.gitignore`, `license`는 **체크하지 않고** **`Create repository`** 클릭
+* 생성된 화면의 저장소 주소(`[https://github.com/아이디/저장소이름.git](https://github.com/아이디/저장소이름.git)`)를 복사합니다.
+
+
+
+---
+
+#### [2단계] 내 컴퓨터 Git 설치 및 초기 설정 (최초 1회)
+
+내 컴퓨터의 **터미널(Mac)** 또는 명령 프롬프트 / Git Bash(Windows)에서 진행합니다.
+
+1. **Git 설치 확인**
+```bash
+git --version
+
+```
+
+
+*(버전 숫자가 나오면 설치 완료. 안 나오면 [git-scm.com](https://git-scm.com/)에서 설치)*
+2. **작성자 정보 등록 (닉네임 및 이메일)**
+```bash
+git config --global user.name "깃허브_아이디"
+git config --global user.email "1단계에서_복사한_이메일주소"
+
+```
+
+
+* **설정 확인:** `git config --list` 입력 후 이름과 이메일이 정상 출력되는지 확인
+
+
+
+---
+
+#### [3단계] 로컬 폴더의 파일을 GitHub에 업로드(Push)
+
+올릴 파일이 들어있는 폴더로 이동하여 아래 명령어를 순서대로 입력합니다.
+
+| 순서 | 단계명 | 입력 명령어 | 설명 |
+| --- | --- | --- | --- |
+| **1** | **폴더 이동** | `cd 올릴_폴더_경로` | 작업할 폴더 위치로 이동 |
+| **2** | **Git 초기화** | `git init` | 현재 폴더를 Git 관리 대상으로 지정 |
+| **3** | **브랜치 설정** | `git branch -M main` | 기본 브랜치 이름을 `main`으로 변경 |
+| **4** | **파일 담기** | `git add .` | 폴더 내 모든 파일을 업로드 대기 상태로 추가 |
+| **5** | **버전 기록** | `git commit -m "첫 업로드"` | 변경 사항을 하나의 버전(Commit)으로 확정 |
+| **6** | **저장소 연결** | `git remote add origin 저장소_주소` | 내 폴더와 1단계에서 만든 GitHub 주소 연결 |
+| **7** | **최종 업로드** | `git push -u origin main` | GitHub 서버로 파일 전송 |
+
+---
+
+#### [4단계] 인증(로그인) 및 업로드 확인
+
+1. **`git push` 실행 시 인증 창이 뜨면:**
+* **최신 Git 환경:** 브라우저 로그인 창이 열리면 **`Authorize git-ecosystem`**(승인) 클릭
+* **토큰(PAT) 입력 방식일 경우:** `Settings` → `Developer settings` → `Personal access tokens` → `Tokens (classic)`에서 `repo` 권한으로 발급받은 토큰(`ghp_...`)을 비밀번호 칸에 붙여넣기
+
+
+2. **최종 확인:** GitHub 웹사이트의 저장소 페이지를 새로고침(`F5`)하여 내 컴퓨터의 파일들이 보이면 완료입니다.
+
+---
+
+#### 💡 수업용 핵심 요약 (자주 묻는 질문)
+
+* **설정 변경이 필요할 때:** `git config --global user.name` 또는 `user.email` 명령어에 새로운 값을 넣어 다시 실행하면 덮어쓰기 됩니다.
+* **파일 수정 후 재업로드할 때:** 처음 올린 뒤에는 `git add .` → `git commit -m "수정내용"` → `git push` 3개 명령어만 반복하면 됩니다.
